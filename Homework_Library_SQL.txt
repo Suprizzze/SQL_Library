@@ -1,0 +1,47 @@
+CREATE DATABASE library;
+
+CREATE TABLE Authors (
+    id SERIAL PRIMARY KEY NOT NULL,
+    first_name CHAR(50) NOT NULL,
+    last_name CHAR(50) NOT NULL
+);
+
+CREATE TABLE Books (
+    id SERIAL PRIMARY KEY NOT NULL,
+    title CHAR(100) NOT NULL,
+    year_first_published INT
+);
+
+CREATE TABLE Bookauthors (
+    author_id smallint,
+    FOREIGN KEY (author_id)
+    REFERENCES authors (id),
+    book_id smallint,
+    FOREIGN KEY (book_id)
+    REFERENCES books (id)
+);
+
+CREATE TABLE BookCopies (
+    id SERIAL PRIMARY KEY,
+    book_id smallint,
+    FOREIGN KEY (book_id)
+    REFERENCES books (id),
+    ISBN VARCHAR(100),
+    year_published INT
+                  );
+
+CREATE TABLE Students (
+    id SERIAL PRIMARY KEY,
+    first_name char(50),
+    last_name char(50)
+);
+
+CREATE TABLE Borrows (
+    id SERIAL PRIMARY KEY,
+    book_copy_id INT,
+    student_id INT,
+    FOREIGN KEY (book_copy_id) REFERENCES bookcopies (id),
+    FOREIGN KEY (student_id) REFERENCES students (id),
+    borrow_date date NOT NULL,
+    return_date date
+);
